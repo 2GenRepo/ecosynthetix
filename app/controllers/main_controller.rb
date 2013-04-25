@@ -13,7 +13,7 @@ class MainController < ApplicationController
       @qualities_failed = Quality.where('last_disposition_state = ?','fail').where('facility_origin_id = ?','2').order("strftime('%Y',date) DESC, julian_date DESC, lot DESC, time DESC").limit(10).search(params[:search])
       @qualities_passed = Quality.where('last_disposition_state = ?','pass').where('facility_origin_id = ?','2').order("strftime('%Y',date) DESC, julian_date DESC, lot DESC, time DESC").limit(10).search(params[:search])
     else
-      @qualities_failed = Quality.where('last_disposition_state = ?','fail').limit(10).search(params[:search])
+      @qualities_failed = Quality.where('last_disposition_state = ?','fail').order("strftime('%Y',date) DESC, julian_date DESC, lot DESC, time DESC").limit(10).search(params[:search])
       @qualities_passed = Quality.where('last_disposition_state = ?','pass').order("strftime('%Y',date) DESC, julian_date DESC, lot DESC, time DESC").limit(10).search(params[:search])
     end
 

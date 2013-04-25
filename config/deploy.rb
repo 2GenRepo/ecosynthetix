@@ -9,7 +9,7 @@ set :password, "21rebeCC@$T"
 set :domain, "108.59.4.77"
 set :application, "Ecosynthetix Quality Application"
 
-set :repository,  "https://2GenRepo@github.com/2GenRepo/ecofinal.git"
+set :repository,  "https://2GenRepo@github.com/2GenRepo/ecosynthetix.git"
 
 #for live app
 #set :branch, "master"
