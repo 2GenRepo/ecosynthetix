@@ -1,0 +1,33 @@
+<h1>Lab Methods</h1>
+
+<table>
+  <tr>
+    <th>Display name</th>
+    <th>Temperature</th>
+    <th>Solids</th>
+    <th>Moisture</th>
+    <th>Bulk density</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @lab_methods.each do |lab_method| %>
+  <tr>
+    <td><%= lab_method.display_name %></td>
+    <td><%= lab_method.temperature %></td>
+    <td><%= lab_method.solids %></td>
+    <td><%= lab_method.moisture %></td>
+    <td><%= lab_method.bulk_density %></td>
+    <td><%= link_to 'Show', lab_method %></td>
+    <td><%= link_to 'Edit', edit_lab_method_path(lab_method) %></td>
+    <td><%= link_to 'Remove', lab_method, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<div class="actions field">
+  <%= link_to 'New Lab method', new_lab_method_path, :class => 'link-button' %>
+</div>

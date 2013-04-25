@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Display name:</b>
+  <%= @lab_method.display_name %>
+</p>
+
+<p>
+  <b>Temperature:</b>
+  <%= @lab_method.temperature %>
+</p>
+
+<p>
+  <b>Solids:</b>
+  <%= @lab_method.solids %>
+</p>
+
+<p>
+  <b>Moisture:</b>
+  <%= @lab_method.moisture %>
+</p>
+
+<p>
+  <b>Bulk density:</b>
+  <%= @lab_method.bulk_density %>
+</p>
+
+
+<%= link_to 'Edit', edit_lab_method_path(@lab_method) %> |
+<%= link_to 'Back', lab_methods_path %>

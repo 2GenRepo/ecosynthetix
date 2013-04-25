@@ -1,0 +1,137 @@
+<%= form_for(@quality) do |f| %>
+  <% if @quality.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quality.errors.count, "error") %> prohibited this quality from being saved:</h2>
+      <ul>
+      <% @quality.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="modal"><!-- _modal.html.erb loads here --></div>
+
+  <div class="field">
+    <%= f.hidden_field :user_id, :value => current_user.id.to_s %>
+  </div>
+  
+  <div class="form-container">
+    <div class="wrapper">
+      <div class="group-field">
+        <div class="field" style="margin:0;min-width:120px">
+          <%= f.label 'Lot #' %><br />
+          <%= f.text_field :lot, :style => 'width:120px' %>
+        </div>
+        <div class="field" style="margin: 35px 10px 0 10px;min-width:10px">&mdash;</div>
+        <div class="field" style="margin: 0;min-width:80px">
+          <%= f.label 'Julian Date' %><br />
+	  <%= f.text_field :julian_date, :maxlength => 3, :style => 'width:80px;text-align:center;', :value => (@quality.julian_date.blank? ? Date.today.yday() : @quality.julian_date.to_s) %>
+        </div>
+        <div class="field" style="margin: 35px 10px 0 10px;min-width:10px">&mdash;</div>
+        <div class="field" style="margin: 0;min-width:110px">
+          <%= f.label 'Time' %><br />
+          <%= f.time_select :time, {:minute_step => 5}, {:class => 'timepicker', :style => 'width:90px'} %>
+        </div>
+        <div class="field" style="margin: 35px 10px 0 10px;min-width:10px">&mdash;</div>
+        <div class="field" style="margin: 0;min-width:70px">
+          <%= f.label 'Tank' %><br />
+          <%= f.text_field :tank, :maxlength => 3, :style => 'width:90px;text-align:center;' %>
+        </div>
+        <div class="field" style="margin: 35px 10px 0 10px;min-width:10px">&mdash;</div>
+        <div class="field" style="margin: 0;min-width:70px">
+          <%= f.label 'Skid' %><br />
+          <%= f.text_field :skid, :maxlength => 3, :style => 'width:90px;text-align:center;' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-container">
+    <div class="wrapper">
+      <h4>Quality Assurance Lab Data</h4>
+
+      <div class="group-field">
+        <div class="field" style="min-width:150px">
+          <%= f.label 'Date of testing' %><br />
+          <%= f.text_field :date, :class => 'datepicker', :value => (@quality.date.blank? ? '' : @quality.date.strftime('%Y-%m-%d')), :style => 'width:130px;' %>
+        </div>
+        <div class="field">
+          <%= f.label 'Time of testing' %><br />
+          <%= f.time_select :date, {:class => 'timepicker', :minute_step => 5}, {:style => 'width:90px;'} %>
+        </div>
+      </div>
+
+      <div class="field" style="">
+        <%= f.label :product_id %><br />
+        <%= f.collection_select :product_id, Product.all, :id, :display_name, {:prompt => 'Select'}, {:style => 'width:300px;'} %>
+      </div>
+      <div class="group-field">
+        <div class="field" style="min-width:120px">
+          <%= f.label :viscosity %><br />
+          <%= f.text_field :viscosity, :style => 'width:100px;text-align:center;' %>
+        </div>
+        <div class="field" style="min-width:120px">
+          <%= f.label :lab_method_id %><br />
+          <%= f.collection_select :lab_method_id, LabMethod.all, :id, :display_name, {:prompt => 'Select'}, {:style => 'width:300px;'} %>
+        </div>
+      </div>
+      
+      <div class="group-field">
+        <div class="field field-lab-method field-temperature" style="min-width:120px">
+          <%= f.label :temperature, 'Temperature (C)' %><br />
+          <%= f.text_field :temperature, :style => 'width:100px;text-align:center;' %>
+        </div>
+        <div class="field field-lab-method field-solids" style="min-width:120px">
+          <%= f.label :solids, '% Solids' %><br />
+          <%= f.text_field :solids, :style => 'width:100px;text-align:center;' %>
+        </div>
+        <div class="field field-lab-method field-moisture" style="min-width:120px">
+          <%= f.label :moisture, '% Moisture' %><br />
+          <%= f.text_field :moisture, :style => 'width:100px;text-align:center;' %>
+        </div>
+        <div class="field field-lab-method field-bulk-density" style="min-width:120px">
+          <%= f.label :bulk_density, 'Bulk Density (lbs.)' %><br />
+          <%= f.text_field :bulk_density, :style => 'width:100px;text-align:center;' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="wrapper">
+      <h4>Color</h4>
+      
+      <div class="group-field">
+        <div class="field" style="margin:0 10px 0 0;min-width:120px">
+          <%= f.label 'L' %><br />
+          <%= f.text_field :color_l, :style => 'width:100px;text-align:center;' %>
+        </div>
+        <div class="field" style="margin:0 10px 0 0;min-width:120px">
+          <%= f.label 'A' %><br />
+          <%= f.text_field :color_a, :style => 'width:100px;text-align:center;' %>
+        </div>
+        <div class="field" style="margin:0 10px 0 0;min-width:120px">
+          <%= f.label 'B' %><br />
+          <%= f.text_field :color_b, :style => 'width:100px;text-align:center;' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-container">
+    <div class="wrapper">
+      <h4>Raw Materials</h4>
+      <div class="field">
+        <%= f.label :starch_lot %><br />
+        <%= f.text_field :starch_lot %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="actions">
+    <%= link_to 'Back', qualities_path %>&nbsp;&nbsp;&nbsp;<%= button_tag 'Save', :id => 'review-button' %>
+    <%= f.submit 'Save', :id => 'save-button', :style => 'display:none;' %>
+  </div>
+  
+<% end %>

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Display name:</b>
+  <%= @alert.display_name %>
+</p>
+
+<p>
+  <b>Alert type:</b>
+  <%= @alert.alert_type %>
+</p>
+
+<p>
+  <b>Who to alert:</b>
+  <%= @alert.who_to_alert %>
+</p>
+
+
+<%= link_to 'Edit', edit_alert_path(@alert) %> |
+<%= link_to 'Back', alerts_path %>

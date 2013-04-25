@@ -1,0 +1,180 @@
+<h1>Quality Assurance Data</h1>
+
+<div class="internal-form">
+
+  <div class="form-container">
+    <div class="bar-one bar-lot">
+      <div class="label">
+        <div class="wrapper">Lot #</div>
+      </div>
+      <div class="value">
+        <div class="wrapper">
+          <%= @quality.full_lot %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-container">
+    <div class="bar-two">
+      <div class="left">
+        <div class="label">
+          <div class="wrapper">Technician</div>
+        </div>
+        <div class="value">
+          <div class="wrapper"><%= link_to(@quality.user.last_name + ", " + @quality.user.first_name, user_path(@quality.user)) %></div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="label">
+          <div class="wrapper">Date/Time Entered</div>
+        </div>
+        <div class="value">
+          <div class="wrapper"><%= @quality.date.strftime("%a, %b %e at %l:%M") + @quality.date.strftime("%p").downcase %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-container-two">
+    <div class="form-container form-left">
+      <div class="bar-one bar-viscosity">
+        <div class="label">
+          <div class="wrapper">Viscosity</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <div class="reading-value">
+              <span class="tag"><%= @quality.last_viscosity_state.upcase %></span>
+              <%= @quality.last_viscosity_value.to_s %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bar-one bar-moisture" style="display:none">
+        <div class="label">
+          <div class="wrapper">Moisture (%)</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <div class="reading-value">
+              <span class="tag"><%= @quality.last_moisture_state.upcase %></span>
+              <%= @quality.last_moisture_value.to_s %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bar-one bar-bulk-density" style="display:none">
+        <div class="label">
+          <div class="wrapper">Bulk Density (lbs.)</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <div class="reading-value">
+              <span class="tag"><%= @quality.last_bulk_density_state.upcase %></span>
+              <%= @quality.last_bulk_density_value.to_s %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bar-one bar-solids" style="display:none">
+        <div class="label">
+          <div class="wrapper">Solids (%)</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <%= @quality.solids.to_s %>
+          </div>
+        </div>
+      </div>
+      <div class="bar-one bar-temperature" style="display:none">
+        <div class="label">
+          <div class="wrapper">Temperature (C)</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <%= @quality.temperature.to_s %>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-container form-right">
+      <div class="bar-one bar-color-l">
+        <div class="label">
+          <div class="wrapper">Color L</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <div class="reading-value">
+              <span class="tag"><%= @quality.last_color_l_state.upcase %></span>
+              <%= @quality.last_color_l_value %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bar-one bar-color-a">
+        <div class="label">
+          <div class="wrapper">Color A</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <%= @quality.color_a %>
+          </div>
+        </div>
+      </div>
+      <div class="bar-one bar-color-b">
+        <div class="label">
+          <div class="wrapper">Color B</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <%= @quality.color_b %>
+          </div>
+        </div>
+      </div>
+      <div class="bar-one bar-starch-lot">
+        <div class="label">
+          <div class="wrapper">Starch Lot</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <%= @quality.starch_lot %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="bar-two bar-product">
+      <div class="left">
+        <div class="label">
+          <div class="wrapper">Product</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <%= @quality.product.display_name %>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="label">
+          <div class="wrapper">Lab Method</div>
+        </div>
+        <div class="value">
+          <div class="wrapper">
+            <%= @quality.lab_method.display_name %>
+          </div>
+        </div>      
+      </div>
+    </div>
+  </div>
+  
+  <%= hidden_field_tag('quality_lab_method_id',@quality.lab_method_id) %>
+      
+  <div class="actions field">
+    <%= link_to 'Back', qualities_path %>&nbsp;&nbsp;&nbsp;<%= link_to 'Edit', edit_quality_path(@quality), :class => 'link-button' %>&nbsp;&nbsp;&nbsp;<%= button_to 'Delete', quality_path(@quality), method: :delete %>
+  </div>
+  
+</div>

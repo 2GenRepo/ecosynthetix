@@ -1,0 +1,12 @@
+<div class="options-container">
+  <h1>Options</h1>
+  <div class="form-container">
+    <div class="wrapper">
+      <%= form_tag '/options', {:remote => true, :style => 'position:relative;', :method => :post} do |f| %>
+        <h4>Revalidate Quality Assurance Data</h4>
+        <p>Poll all quality assurance data for PASS/FAIL. This is useful if you must do a mass revalidation of all the records in the quality assurance database. Caution: Revalidating all quality assurance data will take a few minutes and the application will be unresponsive until complete.</p>
+        <%= submit_tag 'Revalidate data', :id => 'revalidate-data-button', :class => 'small-button' %>
+      <% end %>
+    </div>
+  </div>
+</div>

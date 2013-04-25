@@ -1,0 +1,39 @@
+<%
+
+html = '<table><tr><th>Lot #</th><th>Date</th><th>Readings</th><th>Technician</th></tr>'
+@qualities.each do |quality|
+  html += '<tr class="content-item clickable">'
+  print quality.date.inspect + ', '
+  html += '<td style="white-space: nowrap;">' + link_to(quality.full_lot,quality_path(quality)) + '</td>'
+  html += '<td style="white-space: nowrap;">' + quality.date.to_s + '</td>'
+  html += '<td style="padding:0;text-align:left;margin:auto;">'
+  html += '<div class="reading ' + quality.last_disposition_state.downcase + '">Disposition<br>' + quality.last_disposition_state.upcase + '</div>'
+  html += '<div class="reading ' + quality.last_viscosity_state.downcase + '">Viscosity<br>' + sprintf("%.02f",quality.last_viscosity_value).to_s  + '</div>' unless !quality.last_viscosity_state
+
+  if quality.last_color_l_state
+    html += '<div class="reading '
+    html += quality.last_color_l_state.downcase
+    html += '">Color<br>' + sprintf("%.02f",quality.last_color_l_value).to_s + '</div>'
+  end
+  if quality.last_moisture_state
+    html += '<div class="reading '
+    html += quality.last_moisture_state.downcase
+    html += '">Moisture<br>' + sprintf("%.02f",quality.last_moisture_value).to_s + '</div>'
+  end
+  if quality.last_bulk_density_state
+    html += '<div class="reading '
+    html += quality.last_bulk_density_state.downcase
+    html += '">Bulk Density<br>' + sprintf("%.02f",quality.last_bulk_density_value).to_s + '</div>'
+  end
+  html += '</td>'
+  html += '<td>' + quality.user.last_name + ', ' + quality.user.first_name + '</td>'
+  html += '</tr>'
+end
+html += '</table>' + button_to('Download as .xlsx', {:format => 'xlsx', :searchType => 'qualities'})
+html += paginate(@qualities, :remote => true)
+
+%>
+
+$('.result-content .content-item.qualities').html('<%= raw escape_javascript(html).html_safe %>');
+$('.result-count.qualities').html('<%= @qualities.total_count%>');
+$('.result-container').slideDown(100,function() { $('.navigation').css('height',$('.content').height()) });

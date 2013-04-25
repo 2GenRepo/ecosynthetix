@@ -1,0 +1,4 @@
+ecosynthetix - repo and dev
+
+jan 3, 13:
+- using capistrano to deploy to webfaction server

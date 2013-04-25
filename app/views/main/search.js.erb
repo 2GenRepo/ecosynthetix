@@ -1,0 +1,156 @@
+/*<%
+
+#  Quality search
+
+qualities_html = '<table id="sTable"><tr><th>Lot#</th><th>Date</th><th>Readings</th><th>Technician</th></tr>'
+@qualities.each do |quality|
+  qualities_html += '<tr class="content-item clickable">'
+  qualities_html += '<td style="white-space: nowrap;">' + link_to_sorted(quality.full_lot,quality_path(quality)) + '</td>'
+  #begin 
+  #  Date.parse(quality.date)
+  #  quality_date_proc = quality.date.strftime("%b %e at %l:%M%p").to_s
+  #rescue
+  #  quality_date_proc = DateTime.now.to_s
+  #end
+
+  #fix above code for date possibly? below works just fine
+  qualities_html += '<td style="white-space: nowrap;">' + quality.date.to_s + '</td>'
+  qualities_html += '<td style="padding:0;text-align:left;margin:auto;">'
+  qualities_html += '<div class="reading ' + quality.last_disposition_state.downcase + '">Disposition<br>' + quality.last_disposition_state.upcase + '</div>'
+  qualities_html += '<div class="reading ' + quality.last_viscosity_state.downcase + '">Viscosity<br>' + sprintf("%.02f",quality.last_viscosity_value).to_s  + '</div>' unless !quality.last_viscosity_value
+  if quality.last_color_l_state
+    qualities_html += '<div class="reading '
+    qualities_html += quality.last_color_l_state.downcase
+    qualities_html += '">Color<br>' + sprintf("%.02f",quality.last_color_l_value).to_s + '</div>'
+  end
+  if quality.last_moisture_state
+    qualities_html += '<div class="reading '
+    qualities_html += quality.last_moisture_state.downcase
+    qualities_html += '">Moisture<br>' + sprintf("%.02f",quality.last_moisture_value).to_s + '</div>'
+  end
+  if quality.last_bulk_density_state
+    qualities_html += '<div class="reading '
+    qualities_html += quality.last_bulk_density_state.downcase
+    qualities_html += '">Bulk Density<br>' + sprintf("%.02f",quality.last_bulk_density_value).to_s + '</div>'
+  end
+  qualities_html += '</td>'
+  qualities_html += '<td>' + quality.user.last_name + ', ' + quality.user.first_name + '</td>'
+  qualities_html += '</tr></tbody>'
+end
+qualities_html += '</table>' + link_to('Download as .xlsx', {:format => 'xlsx', :searchType => 'qualities'})
+qualities_html += paginate @qualities, :remote => true, :param_name => 'qualities_page'
+
+#  Users search
+
+users_html = '<table><tr><th style="text-align:center;">ID</th><th>Last name</th><th>First name</th><th>Roles</th><th>Facility</th><th>Last login</th></tr>'
+@users.each do |user|
+  users_html += '<tr class="content-item clickable">'
+  users_html += '<td style="white-space: nowrap;text-align: center;">' + link_to(user.id,edit_user_path(user)) + '</td>'
+  users_html += '<td style="white-space: nowrap;">' + user.last_name + '</td>'
+  users_html += '<td style="white-space: nowrap;">' + user.first_name + '</td>'
+  users_html += '<td style="white-space: nowrap;">';
+  users_html += '<div class="user-role">Administrator</div>' unless !user.administrator? 
+  users_html += '<div class="user-role">Technician</div>' unless !user.technician?
+  users_html += '<div class="user-role">Sales</div>' unless !user.sales?
+  users_html += '<div class="user-role">Quality</div>' unless !user.quality?
+  users_html += '<div class="user-role">Customer</div>' unless !user.customer?
+  users_html += '</td>'
+  users_html += '<td style="white-space: nowrap;">' + user.facility.display_name + ' (' + user.facility.city + ')</td>'
+  if user.last_sign_in_at
+    users_html += '<td style="white-space: nowrap;">' + user.last_sign_in_at.strftime("%b %e at %l:%M") + user.last_sign_in_at.strftime("%p").downcase + '</td>'
+  else
+    users_html += '<td style="white-space: nowrap;">Never</td>'
+  end
+  users_html += '</tr>'
+end
+users_html += '</table>' 
+users_html += paginate @users, :remote => true, :param_name => 'users_page'
+
+%>
+
+$('.result-content .content-item.qualities').html('<%= raw escape_javascript(qualities_html).html_safe %>');
+$('.result-count.qualities').html('<%= @qualities.total_count%>');
+
+$('.result-content .content-item.users').html('<%= raw escape_javascript(users_html).html_safe %>');
+$('.result-count.users').html('<%= @users.total_count%>');
+
+$('.result-container').slideDown(100, function() { $('.navigation').css('height',$('.content').height()); $('li.content-item').not('.current').css('display', 'none'); });
+
+*/
+
+<%
+
+#  Quality search for dashboard
+
+qualities_html = '<table class="datatable"><thead><tr><th>Lot #</th><th>Date</th><th>Readings</th><th>Technician</th></tr></thead>'
+@qualities.each do |quality|
+  qualities_html += '<tbody><tr class="content-item clickable">'
+  qualities_html += '<td style="white-space: nowrap;">' + link_to(quality.full_lot,quality_path(quality)) + '</td>'
+  begin 
+    Date.parse(quality.date)
+    quality_date_proc = (quality.date.strftime("%b %e at %l:%M") + quality.date.strftime("%p").downcase).to_s
+  rescue
+    quality_date_proc = DateTime.now.to_s
+  end
+  qualities_html += '<td style="white-space: nowrap;">' + quality.date.to_s + '</td>'
+  qualities_html += '<td style="padding:0;text-align:left;margin:auto;">'
+  qualities_html += '<div class="reading ' + quality.last_disposition_state.downcase + '">Disposition<br>' + quality.last_disposition_state.upcase + '</div>'
+  qualities_html += '<div class="reading ' + quality.last_viscosity_state.downcase + '">Viscosity<br>' + sprintf("%.02f",quality.last_viscosity_value).to_s  + '</div>' unless !quality.last_viscosity_value
+  if quality.last_color_l_state
+    qualities_html += '<div class="reading '
+    qualities_html += quality.last_color_l_state.downcase
+    qualities_html += '">Color<br>' + sprintf("%.02f",quality.last_color_l_value).to_s + '</div>'
+  end
+  if quality.last_moisture_state
+    qualities_html += '<div class="reading '
+    qualities_html += quality.last_moisture_state.downcase
+    qualities_html += '">Moisture<br>' + sprintf("%.02f",quality.last_moisture_value).to_s + '</div>'
+  end
+  if quality.last_bulk_density_state
+    qualities_html += '<div class="reading '
+    qualities_html += quality.last_bulk_density_state.downcase
+    qualities_html += '">Bulk Density<br>' + sprintf("%.02f",quality.last_bulk_density_value).to_s + '</div>'
+  end
+  qualities_html += '</td>'
+  qualities_html += '<td>' + quality.user.last_name + ', ' + quality.user.first_name + '</td>'
+  qualities_html += '</tr></tbody>'
+end
+qualities_html += '</table>' + button_to('Export', {:format => 'xlsx', :searchType => 'qualities'})
+qualities_html += paginate @qualities, :remote => true, :param_name => 'qualities_page'
+
+#  Users search
+
+users_html = '<table class="datatable"><thead><tr><th style="text-align:center;">ID</th><th>Last name</th><th>First name</th><th>Roles</th><th>Facility</th><th>Last login</th></tr></thead>'
+@users.each do |user|
+  users_html += '<tbody><tr class="content-item clickable">'
+  users_html += '<td style="white-space: nowrap;text-align: center;">' + link_to(user.id,edit_user_path(user)) + '</td>'
+  users_html += '<td style="white-space: nowrap;">' + user.last_name + '</td>'
+  users_html += '<td style="white-space: nowrap;">' + user.first_name + '</td>'
+  users_html += '<td>'
+  users_html += '<div class="user-role">Administrator</div>' unless !user.administrator? 
+  users_html += '<div class="user-role">Technician</div>' unless !user.technician?
+  users_html += '<div class="user-role">Sales</div>' unless !user.sales?
+  users_html += '<div class="user-role">Quality</div>' unless !user.quality?
+  users_html += '<div class="user-role">Customer</div>' unless !user.customer?
+  users_html += '<div class="user-role">Lab Supervisor</div>' unless !user.labSupervisor?
+  users_html += '</td>'
+  users_html += '<td style="white-space: nowrap;">' + user.facility.display_name + ' (' + user.facility.city + ')</td>'
+  if user.last_sign_in_at
+    users_html += '<td style="white-space: nowrap;">' + user.last_sign_in_at.strftime("%b %e at %l:%M") + user.last_sign_in_at.strftime("%p").downcase + '</td>'
+  else
+    users_html += '<td style="white-space: nowrap;">Never</td>'
+  end
+  users_html += '</tr></tbody>'
+end
+users_html += '</table>'
+users_html += paginate @users, :remote => true, :param_name => 'users_page'
+
+%>
+
+$('.result-content .content-item.qualities').html('<%= raw escape_javascript(qualities_html).html_safe %>');
+$('.result-count.qualities').html('<%= @qualities.total_count%>');
+
+$('.result-content .content-item.users').html('<%= raw escape_javascript(users_html).html_safe %>');
+$('.result-count.users').html('<%= @users.total_count%>');
+
+$('.result-container').slideDown(100, function() { $('.navigation').css('height',$('.content').height()); $('li.content-item').not('.current').css('display', 'none'); });

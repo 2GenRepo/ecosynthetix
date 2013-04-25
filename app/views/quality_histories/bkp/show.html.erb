@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Quality:</b>
+  <%= @quality_history.quality_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @quality_history.user_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_quality_history_path(@quality_history) %> |
+<%= link_to 'Back', quality_histories_path %>

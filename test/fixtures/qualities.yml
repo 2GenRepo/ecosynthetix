@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  date: 2012-02-21 11:46:15
+  lot: MyString
+  viscosity: 9.99
+  solids: 9.99
+  moisture: 9.99
+  bulk_density: 9.99
+  color_l: 9.99
+  color_a: 9.99
+  color_b: 9.99
+  starch_lot: MyString
+
+two:
+  user_id: 1
+  date: 2012-02-21 11:46:15
+  lot: MyString
+  viscosity: 9.99
+  solids: 9.99
+  moisture: 9.99
+  bulk_density: 9.99
+  color_l: 9.99
+  color_a: 9.99
+  color_b: 9.99
+  starch_lot: MyString

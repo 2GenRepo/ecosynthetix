@@ -1,0 +1,109 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(@user.errors.count, "error") %> errors occured:</h4>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+    <div class="wrapper">
+      <h4>Login Information</h4>
+      <% if current_user.administrator? %>
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.text_field :email %>
+      </div>
+      <% end %>
+      <div class="field">
+        <%= f.label :password %><br />
+        <%= f.password_field :password %>
+      </div>
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation %>
+      </div>
+    </div>
+  </div>
+
+  <% if current_user.administrator? %>
+  
+  <div class="form-container">
+    <div class="wrapper">
+      <h4>Contact Information</h4>  
+      <div class="group-field">
+        <div class="field">
+          <%= f.label :first_name %><br />
+          <%= f.text_field :first_name %>
+        </div>
+        <div class="field">
+          <%= f.label :last_name %><br />
+          <%= f.text_field :last_name %>
+        </div>
+      </div>
+      <div class="field">
+        <%= f.label :facility_id %><br />
+        <%= f.collection_select(:facility_id,Facility.all,:id,:display_name,{ :prompt => true }, { :style => 'width:400px;' }) %>
+      </div>
+    </div>
+  </div>
+  
+  <% end %>
+
+  <% if current_user.administrator? %>
+
+  <div class="form-container">
+    <div class="wrapper">
+      <h4>Roles</h4>    
+      <div class="field">
+          <div class="checkbox">
+            <%= f.check_box :administrator %>
+            <%= f.label :administrator %>
+          </div>
+          <div class="checkbox">
+            <%= f.check_box :technician %>
+            <%= f.label :technician %>
+          </div>
+          <div class="checkbox">
+            <%= f.check_box :sales %>
+            <%= f.label :sales %>
+          </div>
+          <div class="checkbox">
+            <%= f.check_box :customer %>
+            <%= f.label :customer %>
+          </div>
+          <div class="checkbox">
+            <%= f.check_box :quality %>
+            <%= f.label :quality %>
+          </div>
+          <div class="checkbox">
+            <%= f.check_box :labSupervisor %>
+            <%= f.label :lab_supervisor %>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="wrapper">
+      <h4>Options</h4>
+      <div class="field">
+        <%= f.check_box :active %>
+        <%= f.label :active, "User is active" %><br />
+      </div>
+    </div>
+  </div>
+  
+  <% end %>
+
+  <div class="actions">
+    <%= link_to 'Back', users_path, {:class => ''} %>&nbsp;&nbsp;&nbsp;
+    <%#= link_to 'Remove user', @user, {:class => 'red-link-button', confirm: 'Are you sure?', method: :delete } %>&nbsp;
+    <%= f.submit %>
+  </div>
+  
+<% end %>

@@ -1,0 +1,77 @@
+<%
+
+if params[:dataset] == 'qualities-failed'
+  qualities_failed_html = '<table id="qualities-failed"><tr><th class="sort">' + sort_link(@qualities_failed, :lot, 'Lot #') + '</th><th class="sort">' + sort_link(@qualities_failed, :date, 'Date') + '</th><th>Readings</th><th class="sort">' + sort_link(@qualities_failed, :user_last_name, 'Technician') + '</th></tr>';
+  @qualities_failed.each do |quality|
+    qualities_failed_html += '<tr class="content-item clickable">'
+    qualities_failed_html += '<td style="white-space: nowrap;">' + link_to(quality.full_lot,quality_path(quality)) + '</td>'
+    qualities_failed_html += '<td style="white-space: nowrap;">' + Date.parse(quality.date).strftime("%b %e at %l:%M") + Date.parse(quality.date).strftime("%p").downcase + '</td>'
+    qualities_failed_html += '<td style="padding:0;text-align:center;margin:auto;">'
+    qualities_passed_html += '<div class="reading ' + quality.last_disposition_state.downcase + '">Disposition<br>FAIL</div>'
+    qualities_passed_html += '<div class="reading ' + quality.last_viscosity_state.downcase + '">Viscosity<br>' + sprintf("%.02f",quality.last_viscosity_value).to_s  + '</div>'
+    
+    qualities_passed_html += '<div class="reading '
+    if !quality.color_l 
+      qualities_passed_html += 'hide '
+    end
+    qualities_passed_html += last_color_l_state.downcase
+    qualities_passed_html += '">Color<br>' + sprintf("%.02f",quality.last_color_l_value).to_s + '</div>'
+    qualities_passed_html += '<div class="reading '
+    if !quality.moisture 
+      qualities_passed_html += 'hide '
+    end
+    qualities_passed_html += last_moisture_state.downcase
+    qualities_passed_html += '">Moisture<br>' + sprintf("%.02f",quality.last_moisture_value).to_s + '</div>'
+    qualities_passed_html += '<div class="reading '
+    if !quality.bulk_density 
+      qualities_passed_html += 'hide '
+    end
+    qualities_passed_html += last_bulk_density_state.downcase
+    qualities_passed_html += '">Bulk Density<br>' + sprintf("%.02f",quality.last_bulk_density_value).to_s + '</div>'
+    qualities_passed_html += '</td>'
+    qualities_passed_html += '<td>' + quality.user.last_name + ', ' + quality.user.first_name + '</td>'
+    qualities_passed_html += '</tr>'
+  end
+  qualities_failed_html += '</table>'
+%>
+  $('table#<%= params[:dataset] %>').parent().html('<%= raw escape_javascript(qualities_failed_html).html_safe %>');
+<%
+elsif params[:dataset] == 'qualities-passed'
+  qualities_passed_html = '<table id="qualities-passed"><tr><th class="sort">' + sort_link(@qualities_passed, :lot, 'Lot #') + '</th><th class="sort">' + sort_link(@qualities_passed, :date, 'Date') + '</th><th>Readings</th><th class="sort">' + sort_link(@qualities_passed, :user_last_name, 'Technician') + '</th></tr>';
+  @qualities_passed.each do |quality|
+    qualities_passed_html += '<tr class="content-item clickable">'
+    qualities_passed_html += '<td style="white-space: nowrap;">' + link_to(quality.full_lot,quality_path(quality)) + '</td>'
+    qualities_passed_html += '<td style="white-space: nowrap;">' + Date.parse(quality.date).strftime("%b %e at %l:%M") + Date.parse(quality.date).strftime("%p").downcase + '</td>'
+    qualities_passed_html += '<td style="padding:0;text-align:center;margin:auto;">'
+    qualities_passed_html += '<div class="reading ' + quality.last_disposition_state.downcase + '">Disposition<br>PASS</div>'
+    qualities_passed_html += '<div class="reading ' + quality.last_viscosity_state.downcase + '">Viscosity<br>' + quality.last_viscosity_value.to_s  + '</div>'
+    
+    qualities_passed_html += '<div class="reading '
+    if !quality.color_l 
+      qualities_passed_html += 'hide '
+    end
+    qualities_passed_html += last_color_l_state.downcase
+    qualities_passed_html += '">Color<br>' + sprintf("%.02f",quality.last_color_l_value).to_s + '</div>'
+    qualities_passed_html += '<div class="reading '
+    if !quality.moisture 
+      qualities_passed_html += 'hide '
+    end
+    qualities_passed_html += last_moisture_state.downcase
+    qualities_passed_html += '">Moisture<br>' + sprintf("%.02f",quality.last_moisture_value).to_s + '</div>'
+    qualities_passed_html += '<div class="reading '
+    if !quality.bulk_density 
+      qualities_passed_html += 'hide '
+    end
+    qualities_passed_html += last_bulk_density_state.downcase
+    qualities_passed_html += '">Bulk Density<br>' + sprintf("%.02f",quality.last_bulk_density_value).to_s + '</div>'
+    qualities_passed_html += '</td>'
+    qualities_passed_html += '<td>' + quality.user.last_name + ', ' + quality.user.first_name + '</td>'
+    qualities_passed_html += '</tr>'
+  end
+  qualities_passed_html += '</table>'
+%>
+  $('table#<%= params[:dataset] %>').parent().html('<%= raw escape_javascript(qualities_passed_html).html_safe %>');
+<%
+end
+
+%>

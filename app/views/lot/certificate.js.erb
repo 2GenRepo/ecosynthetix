@@ -1,0 +1,40 @@
+<%
+qualities = Quality.where('lot = ?',params[:certificate][:lot])
+html = '<table><tr><th>Include</th><th>Lot #</th><th>Date</th><th>Readings</th><th>COA</th></tr>'
+qualities.each do |quality|
+  html += '<tr class="content-item clickable">'
+  html += '<td style="white-space: nowrap;text-align:center;">' + check_box_tag(:quality_selected, quality.id, {:checked => 'checked'}) + '</td>'
+  html += '<td style="white-space: nowrap;">' + quality.full_lot + '</td>'
+  html += '<td style="white-space: nowrap;">' + quality.date.strftime("%b %e at %l:%M") + quality.date.strftime("%p").downcase + '</td>'
+  html += '<td style="padding:0;text-align:left;margin:auto;">'
+  html += '<div class="reading ' + quality.last_disposition_state + '">Disposition<br>' + quality.last_disposition_state.upcase + '</div>'
+  html += '<div class="reading ' + quality.last_viscosity_state + '">Viscosity<br>' + sprintf("%.02f",quality.last_viscosity_value).to_s  + '</div>' unless !quality.last_viscosity_state
+
+  if quality.last_color_l_state  
+    html += '<div class="reading '
+    html += quality.last_color_l_state
+    html += '">Color<br>' + sprintf("%.02f",quality.last_color_l_value).to_s + '</div>'
+  end
+  if quality.last_moisture_state
+    html += '<div class="reading '
+    html += quality.last_moisture_state
+    html += '">Moisture<br>' + sprintf("%.02f",quality.last_moisture_value).to_s + '</div>'
+  end
+  if quality.last_bulk_density_state
+    html += '<div class="reading '
+    html += quality.last_bulk_density_state
+    html += '">Bulk Density<br>' + quality.last_bulk_density_value.to_s + '</div>'
+  end
+  html += '</td>'
+  html += '<td style="white-space: nowrap;">'
+  if quality.coa_printed
+    html += 'Yes'
+  end
+  html += '</td>'  
+  html += '</tr>'
+end
+html += '</table>'
+
+%>
+
+$('.lot-items').html('<%= raw escape_javascript(html).html_safe %>')

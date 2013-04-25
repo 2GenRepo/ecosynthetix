@@ -1,0 +1,42 @@
+<%= form_for @certificate, :url => '/lot/certificate_print' do |f| %>
+  <% if @certificate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@certificate.errors.count, "error") %> prohibited this quality from being saved:</h2>
+      <ul>
+      <% @certificate.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="modal">
+  <div class="dialog" style="height:380px;">
+    <div class="wrapper">
+      <h4>Prepare Certificate of Analysis</h4>
+      <p style="height:60px;overflow:hidden">Please enter 5 digit part number and select L* value if required by customer.</p>
+      <div class="form-container" style="background:#ffffff;">
+        <div class="wrapper">
+          <div class="group-field"> 
+            <div class="field" style="margin:0 10px 0 0;min-width:120px;">
+              <%= f.label :part_number, 'Part Number' %><br />
+              <%= f.text_field :part_number, {:style => 'text-align:center;width:200px;'} %>
+            </div>
+            
+            <div class="field" style="margin:34px 10px 0 17px;min-width:120px;">
+              <%= check_box_tag 'certificate[include_l]' %>
+              <%= f.label :include_l, 'Include L*?' %>
+            </div>
+          </div>
+        </div>
+        <%= hidden_field_tag :certificate_quality_selected, params[:quality_to_include], { :name => 'certificate[quality_selected]' } %>
+      </div>
+
+      <div class="actions">
+        <a href="#" class="back-link">Back</a>&nbsp;&nbsp;&nbsp;<%= button_tag 'Generate', :type => 'submit', :id => 'print-button' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% end %>

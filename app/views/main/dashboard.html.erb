@@ -1,0 +1,105 @@
+<div class="search-container">
+  <div class="wrapper">
+    <%= form_tag '/search', {:remote => true, :style => 'position:relative;', :method => :get} do |f| %>
+      <%= text_field_tag :term, '', {:placeholder => 'Search entire application', :style => 'width:100%'} %>
+      <%= submit_tag 'Search', :id => 'search-button', :style => 'position:absolute;top:1px;margin-top:-1px;right:-4px'; %>
+      <br>
+      <div class="sortOrder">
+        Sort
+        <%= select( :sort, :order, [['Date','sDate'],['Technician','technician']], {:prompt => "Select Sort Order"}) %>
+        By:&nbsp&nbsp
+        <%= radio_button_tag :sortBtn, 'ASC', false, :onclick => "" %> Ascending  &nbsp&nbsp 
+        <%= radio_button_tag :sortBtn, 'DESC', false,:onclick => "" %> Descending
+      </div>
+    <% end %>
+
+  </div>
+</div>
+
+
+<div class="result-container">
+  <h3>Search Results</h3>
+  <div class="result-navigation">
+    <ul>
+      <li class="first current">Quality (<span class="qualities result-count">0</span>)</li>
+      <li class="last">Users (<span class="users result-count">0</span>)</li>
+    </ul>
+  </div>
+  
+  <div class="result-content">
+    <ul>
+      <li class="first current content-item qualities"></li>
+      <li class="last content-item users"></li>
+    </ul>
+  </div>
+</div>
+
+<div class="event-container">
+  <h3>Recent Events</h3>
+  <div class="event-navigation">
+    <ul>
+      <li class="first current">Fail</li>
+      <li class="last">Pass</li>
+    </ul>
+  </div>
+  
+  <div class="event-content">
+    <ul>
+      <li class="first current content-item">
+        <table id="qualities-failed"><tr><th class="sort"><%= sort_link(@qualities_failed, :lot, 'Lot #') %></th><th class="sort"><%= sort_link(@qualities_failed, :date, 'Test Date') %></th><th>Readings</th><th class="sort"><%= sort_link(@qualities_failed, :user_last_name, 'Technician') %></th></tr>
+        <% @qualities_failed.each do |quality| %>
+          <%
+          begin
+            quality_date = Date.parse(quality_date)
+            quality_date = quality_date.strftime("%b %e at %l:%M").to_s + Date.parse(quality_date).strftime("%p").to_s.downcase
+          rescue
+            quality_date = quality.date
+          end
+          %>
+          <tr class="clickable">
+          <td style="white-space: nowrap;"><%= link_to(quality.full_lot,quality_path(quality)) %></td>
+          <td style="white-space: nowrap;"><%= quality_date %></td>
+          <td style="min-width: 370px;padding:0;text-align:left;margin:auto;">
+            <div class="reading <%= quality.last_disposition_state.downcase %>">Disposition<br>FAIL</div>
+            <div class="reading <%= quality.last_viscosity_state.downcase %>">Viscosity<br><%= sprintf("%.02f",quality.last_viscosity_value).to_s %></div>
+            <div class="reading <%= quality.last_color_l_state.downcase %>">Color<br><%= sprintf("%.02f",quality.last_color_l_value).to_s %></div>
+            <div class="reading <%= quality.last_moisture_state.downcase %>">Moisture<br><%= sprintf("%.02f",quality.last_moisture_value).to_s %></div>
+            <div class="reading <%= quality.last_bulk_density_state.downcase %>">Bulk Density<br><%= sprintf("%.02f",quality.last_bulk_density_value).to_s %></div>
+          </td>
+          <td><%= quality.user.last_name + ', ' + quality.user.first_name %></td>
+          </tr>
+        <% end %>
+        </table>
+        <%= button_to 'Export', url_for(:format => 'xlsx', :passed => 'false') %>
+      </li>
+      <li class="last content-item">
+        <table id="qualities-passed"><tr><th class="sort"><%= sort_link(@qualities_failed, :lot, 'Lot #') %></th><th class="sort"><%= sort_link(@qualities_failed, :date, 'Test Date') %></th><th>Readings</th><th class="sort"><%= sort_link(@qualities_failed, :user_last_name, 'Technician') %></th></tr>
+        <% @qualities_passed.each do |quality| %>
+          <%
+          begin
+            quality_date = Date.parse(quality_date)
+            quality_date = quality_date.strftime("%b %e at %l:%M").to_s + Date.parse(quality_date).strftime("%p").to_s.downcase
+          rescue
+            quality_date = quality.date
+          end
+          %>
+          <tr class="clickable">
+          <td style="white-space: nowrap;"><%= link_to(quality.full_lot,quality_path(quality)) %></td>
+          <td style="white-space: nowrap;"><%= quality_date %></td>
+          <td style="min-width: 370px;padding:0;text-align:left;margin:auto;">
+            <div class="reading <%= quality.last_disposition_state.downcase %>">Disposition<br>PASS</div>
+            <div class="reading <%= quality.last_viscosity_state.downcase %>">Viscosity<br><%= sprintf("%.02f",quality.last_viscosity_value).to_s %></div>
+            <div class="reading <%= quality.last_color_l_state.downcase %>">Color<br><%= sprintf("%.02f",quality.last_color_l_value).to_s %></div>
+            <div class="reading <%= quality.last_moisture_state.downcase %>">Moisture<br><%= sprintf("%.02f",quality.last_moisture_value).to_s %></div>
+            <div class="reading <%= quality.last_bulk_density_state.downcase %>">Bulk Density<br><%= quality.last_bulk_density_value.to_s %></div>
+          </td>
+          <td><%= quality.user.last_name + ', ' + quality.user.first_name %></td>
+          </tr>
+        <% end %>
+        </table>
+        <%= button_to 'Export', url_for(:format => 'xlsx', :passed => 'true') %>
+      </li>
+    </ul>
+  </div>
+</div>
+

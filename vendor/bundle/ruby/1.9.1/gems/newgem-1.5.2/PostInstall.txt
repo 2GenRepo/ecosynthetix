@@ -1,0 +1,18 @@
+
+USAGE: newgem project_name
+HELP/OPTIONS: newgem -h
+
+
+newgem can use an environment variable $RUBYFORGE_USERNAME
+for its default. So you can add the following to your .bash_profile:
+
+  export RUBYFORGE_USERNAME="nicwilliams"
+
+Did you know you have script/generate generators?
+  application_generator, component_generator, executable,
+  extconf, install_cucumber, install_jruby, install_rspec,
+  install_website, test_unit
+
+Have fun making RubyGems!
+
+

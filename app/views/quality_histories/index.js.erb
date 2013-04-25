@@ -1,0 +1,14 @@
+<%
+html = '<table><tr><th>Lot #</th><th>Date</th></tr>'
+@quality_histories.each do |quality_history|
+html += '<tr class="clickable">'
+html += '<td>' + link_to(quality_history.quality.full_lot, quality_path(quality_history.quality)) + '</td>'
+html += '<td>' + quality_history.user.last_name + ', ' + quality_history.user.first_name + '(' + quality_history.user.facility.display_name + ', ' + quality_history.user.facility.city + ')' + '</td>'
+html += '</tr>'
+end
+html += '</table>'
+html += paginate(@quality_histories, :remote => true)
+%>
+
+$('.result-content').html('<%= raw escape_javascript(html).html_safe %>');
+$('.navigation').css('height',$('.content').height());

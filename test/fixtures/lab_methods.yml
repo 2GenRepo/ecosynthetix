@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  display_name: MyString
+  temperature: false
+  solids: false
+  moisture: false
+  bulk_density: false
+
+two:
+  display_name: MyString
+  temperature: false
+  solids: false
+  moisture: false
+  bulk_density: false

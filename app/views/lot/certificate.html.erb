@@ -1,0 +1,50 @@
+<h1>Prepare Certificate of Analysis for Printing</h1>
+
+<div class="modal"><!-- _results.html.erb loads here --></div>
+
+<%= form_for @certificate, :url => '/lot/certificate' do |f| %>
+
+  <div class="form-container header">
+    <div class="wrapper">  
+      <div class="message" style="text-align:center;">
+        <%= label_tag 'To begin, add records by selecting a lot.' %>
+      </div>
+      <div class="group-field dashboard">
+        <div class="left" style="float: left;width:60%">
+          <div class="field total-records" style="min-width:120px;margin:0 20px 0 0">
+            <div class="wrapper">0</div>
+          </div>
+          <div class="field" style="margin:13px 10px 0 0;min-width:220px;font-size: 20px;">
+            quality records added
+          </div>
+        </div>
+        <div class="right" style="float: left;width:40%">
+          <div class="field" style="margin:0 10px 0 0;float: none; min-width: 0;text-align: right;">
+            <%= f.button 'Review', { :type => 'button', :id => 'review-button' } %>
+            <%= f.button 'Generate', { :type => 'button', :id => 'generate-button' } %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="wrapper">
+      <div class="group-field">
+        <div class="field" style="margin:0 10px 0 0;min-width:120px">
+          <%= f.select :lot, options_for_select(@lots), {:prompt => 'Select a Lot'}, {:style => 'width:450px;'} %>
+        </div>
+        <div class="field" style="margin:0 10px 0 0;min-width:120px">
+          <%= f.button 'Toggle All', { :id => 'toggle-button', :style => 'display:none;' } %>
+        </div>
+        <div class="field" style="margin:0 10px 0 0;min-width:120px">
+          <%= f.button 'Add Selected', { :id => 'add-selected-button', :style => 'display:none;' } %>
+        </div>
+      </div>
+      <div class="lot-items"></div>
+    </div>
+  </div>
+
+<% end %>
+

@@ -1,0 +1,37 @@
+<%= form_for(@lab_method) do |f| %>
+  <% if @lab_method.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lab_method.errors.count, "error") %> prohibited this lab_method from being saved:</h2>
+
+      <ul>
+      <% @lab_method.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :display_name %><br />
+    <%= f.text_field :display_name %>
+  </div>
+  <div class="field">
+    <%= f.label :temperature %><br />
+    <%= f.check_box :temperature %>
+  </div>
+  <div class="field">
+    <%= f.label :solids %><br />
+    <%= f.check_box :solids %>
+  </div>
+  <div class="field">
+    <%= f.label :moisture %><br />
+    <%= f.check_box :moisture %>
+  </div>
+  <div class="field">
+    <%= f.label :bulk_density %><br />
+    <%= f.check_box :bulk_density %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

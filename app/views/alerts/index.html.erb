@@ -1,0 +1,10 @@
+<h1>Alerts</h1>
+
+<table>
+<% @alerts.each do |alert| %>
+  <tr>
+    <td><%= alert.display_name %></td>
+    <td style="width:70px;text-align: center;"><%= link_to 'Edit', edit_alert_path(alert) %></td>
+  </tr>
+<% end %>
+</table>

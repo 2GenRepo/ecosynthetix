@@ -1,0 +1,5 @@
+$('.result-content').html('<table><tr><th>Last, First</th><th>Email Address</th><th>Facility</th><th>Roles</th></tr><% @users.each do |user| %><tr class="content-item clickable"><td><%= link_to(user.last_name + ", " + user.first_name, edit_user_path(user)) %></td><td><%= user.email %></td><td><%= user.facility.display_name + " (" + user.facility.city + ")" %></td><td><%= raw "<span class=\"user-role\">Administrator</span>" if user.administrator %> <%= raw "<span class=\"user-role\">Sales</span>" if user.sales %> <%= raw "<span class=\"user-role\">Technician</span>" if user.technician %> <%= raw "<span class=\"user-role\">Customer</span>" if user.customer %> <%= raw "<span class=\"user-role\">Quality</span>" if user.quality %><%= raw "<span class=\"user-role\">Lab Supervisor</span>" if user.labSupervisor %></td></tr><% end %></table>');
+$('.result-count').html('<%= @users.count%>');
+$('.result-container').slideDown(100,function() {
+  $('.navigation').css('height',$('.content').height());
+});

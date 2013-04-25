@@ -1,0 +1,137 @@
+<style>
+@media screen,print {
+  #certificate { font-size: 12px; text-align: center; width: 850px; height: 1120px; margin: 50px auto; border: 3px solid #444; position: relative; }
+  #container { margin: 2px; border: 1px solid #444; text-align: center; height: 1114px; }
+  #header {  }
+  #tag { position: absolute; top: 14px; left: 72px; color: #9D6671; font-size: 15px; }
+  #logo { position: absolute; top: 68px; width: 100%; text-align: center; }
+  #logo img { width: 274px; height: 106px; }
+  #address { position: absolute; top: 183px; width: 100%; font-size: 17px; line-height: 25px; font-weight: bold; }
+  #title h1 { position: absolute; top: 260px; width: 100%; text-transform: uppercase; text-decoration: underline; font-size: 19px; font-weight: bold; }
+  #product p { position: absolute; top: 300px; width: 100%; text-decoration: underline; font-size: 19px; font-weight: bold; }
+  #readings { position: absolute; top: 276px; padding: 70px; text-align: left; font-weight: bold; font-size: 19px; }
+  #readings .reading { margin: 33px 0; }
+  #readings .reading .left { line-height: 15px; height: 30px; width: 436px; float: left; }
+  #readings .reading .left small { font-size: 60%; }
+  #readings .reading .right { line-height: 24px; max-height: 54px; text-align: center; width: 160px; float: left; margin: 0; border: 3px solid #444; border-top: none; border-bottom: none; }
+  #readings .reading:after { clear: both; content: '.'; visibility: hidden; height: 0; display: block; }
+  #date { }
+  #date h1 { position: absolute; width: 100%; top: 717px; font-weight: bold; font-size: 18px; }
+  #date .date { padding: 70px; text-align: left; font-weight: bold; font-size: 19px; }
+  #date .date .left { height: 30px; width: 436px; float: left; }
+  #date .date .left small { font-size: 60%; }
+  #date .date .right { text-align: center; height: 30px; width: 160px; float: left; margin: 0; border: 3px solid #444; border-top: none; border-bottom: none; }
+  #date .date:after { clear: both; content: '.'; visibility: hidden; height: 0; display: block; }
+  #date .date.certificate-date { width: 100%; position: absolute; top: 735px; }
+  #date .date.expiry-date { width: 100%; position: absolute; top: 794px; }
+  #signature { font-weight: bold; font-size: 19px; position: absolute; top: 912px; width: 100%; }
+  #signature .signature { padding: 70px; text-align: left; }
+  #signature .signature .left { height: 30px; width: 380px; float: left; }
+  #signature .signature .left small { font-size: 60%; }
+  #signature .signature .right { text-align: center; height: 30px; width: 198px; float: left; margin: 0; }
+  #signature .signature:after { clear: both; content: '.'; visibility: hidden; height: 0; display: block; }
+  #print-button-container { width: 850px; margin: auto; padding: 10px 0; text-align: center; }
+  #footer { position: absolute; text-align: left; top: 1065px; padding: 0 70px; width: 700px; font-size: 14px; color: #9d6671; }
+  #footer .left { left: 71px; position: absolute; }
+  #footer .right { position: absolute; right: 71px; top: 0; }
+}
+
+@media print {
+  #print-button-container { display: none; }
+}
+</style>
+
+<div id="print-button-container">
+  <%= button_tag 'Print', :id => 'print-button', :onclick => 'window.print()' %>
+</div>
+
+<div id="certificate">
+  
+  <div id="container">
+  
+    <div id="header">
+    
+      <div id="tag">EcoSynthetix Inc.</div>
+      
+      <div id="logo">
+        <%= image_tag('logo-large-color.png') %>
+      </div>
+      
+      <div id="address">
+        ECOSYNTHETIX ADHESIVES INC.<br>3365 Mainway, Burlington ON L7M 1A6
+      </div>
+      
+      <div id="title">
+        <h1>Certificate of Analysis</h1>
+      </div>
+      
+      <div id="product">
+        <p>EcoSphere<sup>®</sup> <%= @product.display_name[10..13] %> Biolatex<sup>®</sup> Binder</p>
+      </div>
+      
+    </div>
+    
+    <div id="readings">
+    
+      <div class="reading part">
+        <div class="left">Part #</div>
+        <div class="right"><%= @certificate.part_number %></div>
+      </div>
+      
+      <div class="reading lot">
+        <div class="left">Serial #</div>
+        <div class="right"><%= @quality_lots_list.join(', ') %></div>
+      </div>
+    
+      <div class="reading viscosity">
+        <div class="left">Brookfield Viscosity<br><small>(25% Solids, 100 rpm @ 25 Centigrade)</small></div>
+        <div class="right"><%= sprintf("%.2f",@average_viscosity) %></div>
+      </div>
+      
+      <div class="reading moisture">
+        <div class="left">% Moisture</div>
+        <div class="right"><%= sprintf("%.2f",@average_moisture) %></div>
+      </div>
+      
+      <% if @certificate.include_l %>
+      <div class="reading color_l">
+        <div class="left">CIE L* Color<br><small>
+          <% if @product.display_name[10..13] == "2240" %>
+          (Measured on HunterLab ColorQuest XE, 25% Solids, RSIN Mode, 50 mm cell)
+          <% else %>
+          (Measured on HunterLab ColorQuest XE, 25% Solids, TTRAN Mode, 20 mm cell)
+          <% end %>
+        </small></div>
+        <div class="right"><%= sprintf("%.2f",@average_color_l) %></div>
+      </div>
+      <% end %>
+      
+    </div>
+    
+    <div id="date">
+    
+      <h1>THIS MATERIAL IS CERTIFIED TO BE WITHIN SPECIFICATION</h1>
+    
+      <div class="date certificate-date">
+        <div class="left">Date</div>
+        <div class="right"><%= Date.today.strftime("%B %e, %Y") %></div>
+      </div>
+      
+    </div>
+    
+    <div id="signature">
+      <div class="signature">
+        <div class="left">Signature</div>
+        <div class="right" style="border-bottom:1px solid #000"></div>
+      </div>
+    </div>
+    
+    <div id="footer">
+      <div class="right">PS‐0034‐RV.2</div>
+    </div>
+  
+  </div>
+  
+  <br><br>
+
+</div>

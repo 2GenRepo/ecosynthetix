@@ -1,0 +1,50 @@
+<div class="modal">
+  <div class="dialog" style="height:520px;">
+    <div class="wrapper">
+      <h4>Certificate of Analysis Review</h4>
+      <p style="height:60px;overflow:hidden">Currently included quality records. Press the remove button to delete a record from the Certificate.</p>
+      <div class="review-items" style="background: #ffffff;border: 1px solid #aaa;height:270px;overflow:auto;margin: 0 0 20px 0;">
+        <table>
+          <tr>
+            <th style="width:200px">
+              Lot #
+            </th>
+            <th style="width:200px">
+              Date
+            </th>
+            <th>
+              Readings
+            </th>
+            <th>
+              
+            </th>
+          </tr>
+          <% @qualities.each do |quality| %>
+          <tr style="background:#ffffff;">
+            <td>
+              <%= quality.full_lot %>
+            </td>
+            <td>
+              <%= quality.date.strftime("%b %e at %l:%M") + quality.date.strftime("%p").downcase %>
+            </td>
+            <td style="padding:0;text-align:left;margin:auto;">
+              <div class="reading <%= quality.last_disposition_state %>">Disposition<br><%= quality.last_disposition_state.upcase %></div>
+              <div class="reading <%= quality.last_viscosity_state %>">Viscosity<br><%= sprintf("%.02f",quality.last_viscosity_value).to_s %></div>
+              <div class="reading <%= "hide" if !quality.color_l %> <%= quality.last_color_l_state %>">Color<br><%= sprintf("%.02f",quality.last_color_l_value).to_s %></div>
+              <div class="reading <%= "hide" if !quality.moisture %> <%= quality.last_moisture_state %>">Moisture<br><%= sprintf("%.02f",quality.last_moisture_value).to_s %></div>
+              <div class="reading <%= "hide" if !quality.bulk_density %> <%= quality.last_bulk_density_state %>">Bulk Density<br><%= quality.last_bulk_density_value.to_s %></div>
+            </td>
+            <td>
+              <%= link_to 'Remove', '#', { :id => 'remove-item-button-' + quality.id.to_s, :class => 'small-link-button remove-item-button' } %>
+            </td>
+          </tr>
+          <% end %>
+          
+        </table>
+      </div>
+      <div class="actions">
+        <%= button_tag 'Done', :type => 'button', :id => 'done-button' %>
+      </div>
+    </div>
+  </div>
+</div>

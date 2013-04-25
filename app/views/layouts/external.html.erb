@@ -1,0 +1,68 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Ecosynthetix Quality Assurance</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="external">
+  <!--[if lt IE 8]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  
+  <header>
+
+  </header>
+  
+  <div role="main" id="main">
+  
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    
+    <div class="content">
+      <div class="wrapper">
+        <div class="">
+          <div class="login-container">
+            <div class="left">
+              <div class="wrapper">
+                <%=image_tag('logo-large.png')%>
+              </div>
+            </div>
+            
+            <div class="right">
+              <div class="wrapper">
+                <%= yield %>
+              </div>
+            </div>
+            <div id="browsers">
+    <p>This application was designed for the latest browers (IE9+, Chrome v20+ and Firefox v15+, etc). For the intended user experience and guarantee that the application will work properly, please upgrade to the latest version of your browser of choice.<br><br>
+
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/download-ie">Internet Explorer</a> |
+    <a href="https://www.google.com/intl/en/chrome/browser/">Chrome</a> |
+    <a href="http://www.mozilla.org/en-US/firefox/fx/#desktop">Firefox</a> |
+    <a href="http://www.opera.com/">Opera</a> | 
+    <a href="https://www.apple.com/safari/">Safari</a>
+  </div>
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <footer>
+  
+  </footer>
+
+</body>
+</html>

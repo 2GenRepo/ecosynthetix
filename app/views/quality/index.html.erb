@@ -1,0 +1,47 @@
+<div class="search-container">
+  <div class="wrapper">
+    <%= form_for(@search, :url => qualities_path, :remote => true, :html => {:style => 'position:relative;', :method => :get}) do |f| %>
+      <%= f.text_field :lot_or_starch_lot_or_user_first_name_or_user_last_name_contains, :placeholder => 'Search quality assurance data (lot #, starch lot)', :style => 'width:100%' %>
+      <%= f.submit 'Search', :id => 'search-button', :style => 'position:absolute;top:1px;margin-top:-1px;right:-4px'; %>
+      <br>
+      <div class="sortOrder">
+        Sort
+        <%= select( :sort, :order, [['Date','sDate'],['Technician','technician']], {:prompt => "Select Sort Order"}) %>
+        By:&nbsp&nbsp
+        <%= radio_button_tag :sortBtn, 'ASC', false, :onclick => "" %> Ascending  &nbsp&nbsp 
+        <%= radio_button_tag :sortBtn, 'DESC', false,:onclick => "" %> Descending
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="result-container">
+  <h3>Search Results</h3>
+  <div class="result-navigation">
+    <ul>
+      <li class="first current last">Records (<span class="result-count qualities">0</span>)</li>
+    </ul>
+  </div>
+  
+  <div class="result-content">
+    <ul>
+      <li class="first current content-item qualities"></li>
+    </ul>
+  </div>
+</div>
+
+<div class="actions-container">
+  <div class="action action-enter-new-data action">
+    <div class="wrapper">
+      <h4><%= link_to('Enter new data',new_quality_path) %></h4>
+      <p>Click here to enter quality assurance data for EcoSynthetix Biolatex binders. </p>
+    </div>
+  </div>
+  
+  <div class="action action-view-recent-history action">
+    <div class="wrapper">
+      <h4><%= link_to('View recent history',quality_histories_path) %></h4>
+      <p>Click here to access recent quality assurance entries. Data from recent entries can be confirmed, edited and viewed. </p>
+    </div>
+  </div>
+</div>
