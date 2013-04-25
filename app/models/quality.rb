@@ -116,7 +116,7 @@ end
 
 def skid_tank
   if :skid.present? && :tank.present?
-    errors.add(:skid, "You cannot input a skid number and a tank number.")
+    errors.add(:skid, "and Tank cannot be input at the same time.")
   end 
 end
   
