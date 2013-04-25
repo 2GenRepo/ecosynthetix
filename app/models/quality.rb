@@ -20,9 +20,9 @@ class Quality < ActiveRecord::Base
   validates :julian_date, :presence => true
   validates_format_of :julian_date, :with => /^\d{3}$/
   validates :time, :presence => true
-  validates :tank, :presence => true, :unless => "skid.present?"
+  validates :tank, :presence => true, :unless => "tank.present?"
   validates :tank, :numericality => { :greater_than_or_equal_to => 0 }, :unless => "tank.blank?"
-  validates :skid, :presence => true, :unless => "tank.present?"
+  validates :skid, :presence => true, :unless => "skid.present?"
   validates :skid, :numericality => { :greater_than_or_equal_to => 0 }, :unless => "skid.blank?"
   validates :viscosity, :presence => true
   validates :viscosity, :numericality => { :greater_than_or_equal_to => 0 }
@@ -38,7 +38,7 @@ class Quality < ActiveRecord::Base
   validates :date, :presence => true
   validate :solid_validation
   validate :temp_validation
-
+  validate :skid_tank
   
   # Conditional Validation
   validates_format_of :temperature, :with => /^\d+\.*\d{0,5}$/, :if => lambda {
@@ -113,6 +113,12 @@ def temp_validation
     end
   end
 end
+
+def skid_tank
+  if :skid.present? && :tank.present?
+    errors.add(:skid, "You cannot input a skid number and a tank number.")
+  end 
+end
   
   # Validation Helpers
   def correct_lab_method(field)
@@ -127,6 +133,8 @@ end
     end
     self.lot.to_s + self.julian_date.to_s + quality_time.strftime("%H%M").to_s + self.tank.to_s + self.skid.to_s
   end
+
+
   
   # Scopes
   scope :lots, lambda {
