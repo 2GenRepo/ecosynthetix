@@ -76,21 +76,23 @@ Init =
         if($('#quality_lab_method_id').val().toString() != '' && $('#quality_product_id').val().toString() != '' && $('#quality_color_l').val().toString() != '' && $('#quality_color_a').val().toString() != '' && $('#quality_color_b').val().toString() != '' && $('#quality_viscosity').val().toString() != '' && $('#quality_lot').val().toString() != '' && $('#quality_julian_date').val().toString() != '' && $('#quality_tank').val().toString() != '' && $('#quality_skid').val().toString() != '' &&  $('#quality_starch_lot').val().toString() != '' && $('#quality_temperature').val().toString() != '' && $('#quality_solids').val().toString() != '' && $('#quality_moisture').val().toString() != '' && $('#quality_bulk_density').val().toString() != '')
           if $('#quality_lab_method_id').val().toString() == '1'
             if ($('#quality_solids').val() >= 24 && $('#quality_solids').val() <= 28) && ($('#quality_temperature').val() >= 20 && $('#quality_temperature').val() <= 29)
-              $.post('/quality-assurance/modal', $('form').serialize(), (data) ->
-                $('.modal').html(data)
-                $('.modal').show()
-                $('.modal .dialog').hide().delay(100).css({top:'-400px'}).show().animate({top:'-1px'},200)
-              )
+              if ($('#quality_tank').val().toString() != '' && $('#quality_skid').val().toString() == '') || ($('#quality_tank').val().toString() == '' && $('#quality_skid').val().toString() != '')
+                $.post('/quality-assurance/modal', $('form').serialize(), (data) ->
+                  $('.modal').html(data)
+                  $('.modal').show()
+                  $('.modal .dialog').hide().delay(100).css({top:'-400px'}).show().animate({top:'-1px'},200)
+                )
               return false
             else
               return true
           else if $('#quality_lab_method_id').val().toString() == '2'
             if $('#quality_solids').val() >= 16.5 && $('#quality_solids').val() <= 18.5
-              $.post('/quality-assurance/modal', $('form').serialize(), (data) ->
-                $('.modal').html(data)
-                $('.modal').show()
-                $('.modal .dialog').hide().delay(100).css({top:'-400px'}).show().animate({top:'-1px'},200)
-              )
+              if ($('#quality_tank').val().toString() != '' && $('#quality_skid').val().toString() == '') || ($('#quality_tank').val().toString() == '' && $('#quality_skid').val().toString() != '')
+                $.post('/quality-assurance/modal', $('form').serialize(), (data) ->
+                  $('.modal').html(data)
+                  $('.modal').show()
+                  $('.modal .dialog').hide().delay(100).css({top:'-400px'}).show().animate({top:'-1px'},200)
+                )
               return false
             else
               return true
