@@ -20,9 +20,9 @@ class Quality < ActiveRecord::Base
   validates :julian_date, :presence => true
   validates_format_of :julian_date, :with => /^\d{3}$/
   validates :time, :presence => true
-  validates :tank, :presence => true, :unless => "tank.present?"
+  validates :tank, :presence => true, :unless => "skid.present?"
   validates :tank, :numericality => { :greater_than_or_equal_to => 0 }, :unless => "tank.blank?"
-  validates :skid, :presence => true, :unless => "skid.present?"
+  validates :skid, :presence => true, :unless => "tank.present?"
   validates :skid, :numericality => { :greater_than_or_equal_to => 0 }, :unless => "skid.blank?"
   validates :viscosity, :presence => true
   validates :viscosity, :numericality => { :greater_than_or_equal_to => 0 }
@@ -38,7 +38,7 @@ class Quality < ActiveRecord::Base
   validates :date, :presence => true
   validate :solid_validation
   validate :temp_validation
-  validate :skid_tank
+  validate :check_skid_tank
   
   # Conditional Validation
   validates_format_of :temperature, :with => /^\d+\.*\d{0,5}$/, :if => lambda {
@@ -114,11 +114,15 @@ def temp_validation
   end
 end
 
-def skid_tank
-  if :skid.present? && :tank.present?
-    errors.add(:skid, "and Tank cannot be input at the same time.")
-  end 
+def check_skid_tank
+  if !skid.blank? && !tank.blank?
+    errors.add(:tank, "and Skid cannot be filled in at the same time") 
+    return false
+  else
+    return true
+  end
 end
+
   
   # Validation Helpers
   def correct_lab_method(field)
