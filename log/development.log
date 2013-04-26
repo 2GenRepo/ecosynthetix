@@ -2543,3 +2543,108 @@ Processing by QualityController#new as HTML
   Rendered quality/_form.html.erb (12.0ms)
   Rendered quality/new.html.erb within layouts/application (12.7ms)
 Completed 200 OK in 20ms (Views: 16.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/quality-assurance/new" for 127.0.0.1 at 2013-04-26 11:13:46 -0500
+Processing by QualityController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1[0m
+  [1m[35mProduct Load (0.1ms)[0m  SELECT "products".* FROM "products" 
+  [1m[36mLabMethod Load (0.1ms)[0m  [1mSELECT "lab_methods".* FROM "lab_methods" [0m
+  Rendered quality/_form.html.erb (74.0ms)
+  Rendered quality/new.html.erb within layouts/application (76.4ms)
+Completed 200 OK in 180ms (Views: 89.8ms | ActiveRecord: 1.3ms)
+
+
+Started POST "/quality-assurance" for 127.0.0.1 at 2013-04-26 11:13:51 -0500
+Processing by QualityController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/Q7Uve0eKnMdum+2ASm+0rcMu65/L9dtDuGacCkKm+g=", "quality"=>{"user_id"=>"33", "lot"=>"", "julian_date"=>"116", "time(1i)"=>"2013", "time(2i)"=>"4", "time(3i)"=>"26", "time(4i)"=>"16", "time(5i)"=>"00", "tank"=>"123", "skid"=>"123", "date"=>"", "date(1i)"=>"2013", "date(2i)"=>"4", "date(3i)"=>"26", "date(4i)"=>"16", "date(5i)"=>"00", "product_id"=>"", "viscosity"=>"", "lab_method_id"=>"", "temperature"=>"", "solids"=>"", "moisture"=>"", "bulk_density"=>"", "color_l"=>"", "color_a"=>"", "color_b"=>"", "starch_lot"=>""}, "button"=>""}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mProduct Load (0.1ms)[0m  [1mSELECT "products".* FROM "products" [0m
+  [1m[35mLabMethod Load (0.1ms)[0m  SELECT "lab_methods".* FROM "lab_methods" 
+  Rendered quality/_form.html.erb (16.5ms)
+  Rendered quality/new.html.erb within layouts/application (17.0ms)
+Completed 200 OK in 30ms (Views: 20.1ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/quality-assurance" for 127.0.0.1 at 2013-04-26 11:14:30 -0500
+Processing by QualityController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/Q7Uve0eKnMdum+2ASm+0rcMu65/L9dtDuGacCkKm+g=", "quality"=>{"user_id"=>"33", "lot"=>"QR23423H", "julian_date"=>"116", "time(1i)"=>"2013", "time(2i)"=>"4", "time(3i)"=>"26", "time(4i)"=>"16", "time(5i)"=>"00", "tank"=>"123", "skid"=>"123", "date"=>"2013-04-26", "date(1i)"=>"2013", "date(2i)"=>"4", "date(3i)"=>"26", "date(4i)"=>"16", "date(5i)"=>"00", "product_id"=>"1", "viscosity"=>"123", "lab_method_id"=>"1", "temperature"=>"25", "solids"=>"25", "moisture"=>"25", "bulk_density"=>"25", "color_l"=>"123", "color_a"=>"123", "color_b"=>"123", "starch_lot"=>"123"}, "button"=>""}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mLabMethod Load (1.9ms)[0m  [1mSELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mProduct Load (0.1ms)[0m  [1mSELECT "products".* FROM "products" [0m
+  [1m[35mLabMethod Load (0.1ms)[0m  SELECT "lab_methods".* FROM "lab_methods" 
+  Rendered quality/_form.html.erb (12.2ms)
+  Rendered quality/new.html.erb within layouts/application (12.9ms)
+Completed 200 OK in 74ms (Views: 57.4ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2013-04-26 11:39:31 -0500
+Processing by MainController#dashboard as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1[0m
+  [1m[35mQuality Load (9.4ms)[0m  SELECT "qualities".* FROM "qualities" WHERE (last_disposition_state = 'fail') ORDER BY strftime('%Y',date) DESC, julian_date DESC, lot DESC, time DESC LIMIT 10
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 30 LIMIT 1[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 34 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 30 LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 34 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 34 LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 10 LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 10 LIMIT 1
+  [1m[36mQuality Load (26.6ms)[0m  [1mSELECT "qualities".* FROM "qualities" WHERE (last_disposition_state = 'pass') ORDER BY strftime('%Y',date) DESC, julian_date DESC, lot DESC, time DESC LIMIT 10[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 6 LIMIT 1
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 11 LIMIT 1[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 8 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 10 LIMIT 1[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 15 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 6 LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 11 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 11 LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 8 LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 10 LIMIT 1[0m
+  Rendered main/dashboard.html.erb within layouts/application (155.6ms)
+Completed 200 OK in 258ms (Views: 129.6ms | ActiveRecord: 38.7ms)
+
+
+Started GET "/quality-assurance" for 127.0.0.1 at 2013-04-26 11:39:33 -0500
+Processing by QualityController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1
+  Rendered quality/index.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 53ms (Views: 49.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/quality-assurance/new" for 127.0.0.1 at 2013-04-26 11:39:35 -0500
+Processing by QualityController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1[0m
+  [1m[35mProduct Load (0.1ms)[0m  SELECT "products".* FROM "products" 
+  [1m[36mLabMethod Load (0.1ms)[0m  [1mSELECT "lab_methods".* FROM "lab_methods" [0m
+  Rendered quality/_form.html.erb (90.4ms)
+  Rendered quality/new.html.erb within layouts/application (92.7ms)
+Completed 200 OK in 101ms (Views: 96.8ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/quality-assurance" for 127.0.0.1 at 2013-04-26 11:40:14 -0500
+Processing by QualityController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/Q7Uve0eKnMdum+2ASm+0rcMu65/L9dtDuGacCkKm+g=", "quality"=>{"user_id"=>"33", "lot"=>"QP34245W", "julian_date"=>"116", "time(1i)"=>"2013", "time(2i)"=>"4", "time(3i)"=>"26", "time(4i)"=>"16", "time(5i)"=>"00", "tank"=>"123", "skid"=>"123", "date"=>"", "date(1i)"=>"2013", "date(2i)"=>"4", "date(3i)"=>"26", "date(4i)"=>"16", "date(5i)"=>"00", "product_id"=>"1", "viscosity"=>"123", "lab_method_id"=>"1", "temperature"=>"25", "solids"=>"25", "moisture"=>"25", "bulk_density"=>"25", "color_l"=>"123", "color_a"=>"123", "color_b"=>"123", "starch_lot"=>"123"}, "button"=>""}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 33 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mLabMethod Load (1.9ms)[0m  SELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "lab_methods".* FROM "lab_methods" WHERE "lab_methods"."id" = ? LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35mProduct Load (0.1ms)[0m  SELECT "products".* FROM "products" 
+  [1m[36mLabMethod Load (0.1ms)[0m  [1mSELECT "lab_methods".* FROM "lab_methods" [0m
+  Rendered quality/_form.html.erb (13.9ms)
+  Rendered quality/new.html.erb within layouts/application (14.5ms)
+Completed 200 OK in 74ms (Views: 59.1ms | ActiveRecord: 2.5ms)
