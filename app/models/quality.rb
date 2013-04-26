@@ -24,6 +24,8 @@ class Quality < ActiveRecord::Base
   validates :tank, :numericality => { :greater_than_or_equal_to => 0 }, :unless => "tank.blank?"
   validates :skid, :presence => true, :unless => "tank.present?"
   validates :skid, :numericality => { :greater_than_or_equal_to => 0 }, :unless => "skid.blank?"
+  validates_length_of :skid, :minimum => 3, :maximum => 3, :allow_blank => true
+  validates_length_of :tank, :minimum => 3, :maximum => 3, :allow_blank => true
   validates :viscosity, :presence => true
   validates :viscosity, :numericality => { :greater_than_or_equal_to => 0 }
   validates_format_of :viscosity, :with => /^\d+\.*\d{0,5}$/
