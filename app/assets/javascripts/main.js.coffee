@@ -73,7 +73,7 @@ Init =
       
     edit: ->
       $('#review-button').on 'click', ->
-        if($('#quality_lab_method_id').val().toString() != '' && $('#quality_product_id').val().toString() != '' && $('#quality_color_l').val().toString() != '' && $('#quality_color_a').val().toString() != '' && $('#quality_color_b').val().toString() != '' && $('#quality_viscosity').val().toString() != '' && $('#quality_lot').val().toString() != '' && $('#quality_julian_date').val().toString() != '' && $('#quality_tank').val().toString() != '' && $('#quality_starch_lot').val().toString() != '' && $('#quality_temperature').val().toString() != '' && $('#quality_solids').val().toString() != '' && $('#quality_moisture').val().toString() != '' && $('#quality_bulk_density').val().toString() != '')
+        if($('#quality_lab_method_id').val().toString() != '' && $('#quality_product_id').val().toString() != '' && $('#quality_color_l').val().toString() != '' && $('#quality_color_a').val().toString() != '' && $('#quality_color_b').val().toString() != '' && $('#quality_viscosity').val().toString() != '' && $('#quality_lot').val().toString() != '' && $('#quality_julian_date').val().toString() != '' && $('#quality_tank').val().toString() != '' && $('#quality_skid').val().toString() != '' &&  $('#quality_starch_lot').val().toString() != '' && $('#quality_temperature').val().toString() != '' && $('#quality_solids').val().toString() != '' && $('#quality_moisture').val().toString() != '' && $('#quality_bulk_density').val().toString() != '')
           if $('#quality_lab_method_id').val().toString() == '1'
             if ($('#quality_solids').val() >= 24 && $('#quality_solids').val() <= 28) && ($('#quality_temperature').val() >= 20 && $('#quality_temperature').val() <= 29)
               $.post('/quality-assurance/modal', $('form').serialize(), (data) ->
@@ -105,7 +105,7 @@ Init =
       $('#quality_lot,#quality_starch_lot').on 'change', ->
         $(this).val $(this).val().toUpperCase()
         
-      $('#quality_tank,#quality_julian_date,#quality_temperature,#quality_viscosity,#quality_color_l,#quality_color_a,#quality_color_c,#quality_solids,#quality_moisture,#quality_bulk_density').on 'change', ->
+      $('#quality_tank,#quality_skid,#quality_julian_date,#quality_temperature,#quality_viscosity,#quality_color_l,#quality_color_a,#quality_color_c,#quality_solids,#quality_moisture,#quality_bulk_density').on 'change', ->
         if isNaN(parseFloat($(this).val())) 
           $(this).val('')
       
@@ -113,6 +113,7 @@ Init =
       $('#quality_lot').mask('aa99999a')
       $('#quality_julian_date').mask('999')
       $('#quality_tank').mask('9?99')
+      $('#quality_skid').mask('9?99')
       #$('#quality_viscosity,#quality_temperature,#quality_color_l,#quality_color_a,#quality_color_b').mask('99?9.9')
       #$('#quality_moisture').mask('9?99.99')
       #$('#quality_bulk_density').mask('9?99.9')

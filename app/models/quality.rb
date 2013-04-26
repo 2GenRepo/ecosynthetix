@@ -117,9 +117,6 @@ end
 def check_skid_tank
   if !skid.blank? && !tank.blank?
     errors.add(:tank, "and Skid cannot be filled in at the same time") 
-    return false
-  else
-    return true
   end
 end
 
