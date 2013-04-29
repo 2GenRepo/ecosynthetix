@@ -13,11 +13,11 @@ set :repository,  "https://2GenRepo@github.com/2GenRepo/ecosynthetix.git"
 
 #for live app
 #set :branch, "master"
-#set :deploy_to, "/home/w2gen/webapps/ecolive"
+set :deploy_to, "/home/w2gen/webapps/ecolive"
 
 #for staging app
-set :branch, "master"
-set :deploy_to, "/home/w2gen/webapps/ecosynthetix"
+#set :branch, "master"
+#set :deploy_to, "/home/w2gen/webapps/ecosynthetix"
 
 #set :deploy_via, :remote_cache
 
